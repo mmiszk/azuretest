@@ -114,12 +114,11 @@
 							"deleting": false
 						}
 					},
-					"microsoft": {
-						"language": "sparksql"
-					},
 					"collapsed": false
 				},
 				"source": [
+					"# WWWWWW\r\n",
+					"\r\n",
 					"%%sql\r\n",
 					"\r\n",
 					"CREATE OR REPLACE TEMPORARY VIEW top_items as  \r\n",

@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "synrg2"
+		},
+		"synrg2-WorkspaceDefaultSqlServer_connectionString": {
+			"value": ""
+		},
+		"synrg2-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://dlsg2mmv2.dfs.core.windows.net"
+		},
+		"us-producer-price-index-commodities_sasUri": {
+			"value": ""
+		}
+	}
+}

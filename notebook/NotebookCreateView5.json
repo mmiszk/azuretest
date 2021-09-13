@@ -1,5 +1,5 @@
 {
-	"name": "Notebook 1",
+	"name": "NotebookCreateView5",
 	"properties": {
 		"nbformat": 4,
 		"nbformat_minor": 2,
@@ -21,121 +21,6 @@
 		},
 		"metadata": {
 			"saveOutput": true,
-			"synapse_widget": {
-				"version": "0.1",
-				"state": {
-					"acc6d0f4-e703-42a4-8d4b-477c0f7ef321": {
-						"type": "Synapse.DataFrame",
-						"sync_state": {
-							"table": {
-								"rows": [
-									{
-										"0": "121308",
-										"1": "10",
-										"2": "WPU10121308",
-										"3": "2017",
-										"4": "M09",
-										"5": "187.1",
-										"6": "nan",
-										"7": "U",
-										"8": "PPI Commodity data for Metals and metal products-Cast iron scrap, not seasonally adjusted",
-										"9": "Metals and metal products",
-										"10": "Cast iron scrap"
-									},
-									{
-										"0": "121308",
-										"1": "10",
-										"2": "WPU10121308",
-										"3": "2017",
-										"4": "M10",
-										"5": "180.5",
-										"6": "nan",
-										"7": "U",
-										"8": "PPI Commodity data for Metals and metal products-Cast iron scrap, not seasonally adjusted",
-										"9": "Metals and metal products",
-										"10": "Cast iron scrap"
-									}
-								],
-								"schema": [
-									{
-										"key": "0",
-										"name": "item_code",
-										"type": "string"
-									},
-									{
-										"key": "1",
-										"name": "group_code",
-										"type": "string"
-									},
-									{
-										"key": "2",
-										"name": "series_id",
-										"type": "string"
-									},
-									{
-										"key": "3",
-										"name": "year",
-										"type": "int"
-									},
-									{
-										"key": "4",
-										"name": "period",
-										"type": "string"
-									},
-									{
-										"key": "5",
-										"name": "value",
-										"type": "float"
-									},
-									{
-										"key": "6",
-										"name": "footnote_codes",
-										"type": "string"
-									},
-									{
-										"key": "7",
-										"name": "seasonal",
-										"type": "string"
-									},
-									{
-										"key": "8",
-										"name": "series_title",
-										"type": "string"
-									},
-									{
-										"key": "9",
-										"name": "group_name",
-										"type": "string"
-									},
-									{
-										"key": "10",
-										"name": "item_name",
-										"type": "string"
-									}
-								]
-							},
-							"isSummary": false,
-							"language": "scala"
-						},
-						"persist_state": {
-							"view": {
-								"type": "details",
-								"chartOptions": {
-									"chartType": "bar",
-									"aggregationType": "sum",
-									"categoryFieldKeys": [
-										"0"
-									],
-									"seriesFieldKeys": [
-										"3"
-									],
-									"isStacked": false
-								}
-							}
-						}
-					}
-				}
-			},
 			"kernelspec": {
 				"name": "synapse_pyspark",
 				"display_name": "Synapse PySpark"
@@ -155,9 +40,9 @@
 				"sparkVersion": "2.4",
 				"nodeCount": 3,
 				"cores": 4,
-				"memory": 28,
-				"extraHeader": null
-			}
+				"memory": 28
+			},
+			"sessionKeepAliveTimeout": 30
 		},
 		"cells": [
 			{
@@ -177,9 +62,9 @@
 					]
 				},
 				"source": [
-					"param_th = \"7E7\""
+					"param_th = \"7E7\"\r\n",
+					""
 				],
-				"attachments": null,
 				"execution_count": 16
 			},
 			{
@@ -195,7 +80,6 @@
 					"# Display 10 rows\n",
 					"display(df.limit(2))"
 				],
-				"attachments": null,
 				"execution_count": 11
 			},
 			{
@@ -214,9 +98,8 @@
 				"source": [
 					"topItems_select = df.select(\"item_code\", \"year\",\"period\",\"value\")\r\n",
 					"topItems_select.createOrReplaceTempView(\"topItems_view\")\r\n",
-					"topItems_select.show(2)"
+					"topItems_select.show(3)"
 				],
-				"attachments": null,
 				"execution_count": 12
 			},
 			{
@@ -231,18 +114,16 @@
 							"deleting": false
 						}
 					},
-					"microsoft": {
-						"language": "sparksql"
-					},
 					"collapsed": false
 				},
 				"source": [
+					"# WWWWWW\r\n",
+					"\r\n",
 					"%%sql\r\n",
 					"\r\n",
-					"CREATE OR REPLACE TEMPORARY VIEW top_items as \r\n",
+					"CREATE OR REPLACE TEMPORARY VIEW top_items as  \r\n",
 					"select item_code, sum(value) as sumvalue from topItems_view group by item_code order by sum(value) desc"
 				],
-				"attachments": null,
 				"execution_count": 13
 			},
 			{
@@ -263,7 +144,6 @@
 					"\r\n",
 					"topitems_view.show(10)"
 				],
-				"attachments": null,
 				"execution_count": 14
 			},
 			{
@@ -284,7 +164,6 @@
 					"\r\n",
 					"top5ItemsOverall.show()"
 				],
-				"attachments": null,
 				"execution_count": 17
 			}
 		]

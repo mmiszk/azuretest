@@ -1,0 +1,292 @@
+{
+	"name": "Notebook 1",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "mmApacheSpark2",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1",
+				"state": {
+					"acc6d0f4-e703-42a4-8d4b-477c0f7ef321": {
+						"type": "Synapse.DataFrame",
+						"sync_state": {
+							"table": {
+								"rows": [
+									{
+										"0": "121308",
+										"1": "10",
+										"2": "WPU10121308",
+										"3": "2017",
+										"4": "M09",
+										"5": "187.1",
+										"6": "nan",
+										"7": "U",
+										"8": "PPI Commodity data for Metals and metal products-Cast iron scrap, not seasonally adjusted",
+										"9": "Metals and metal products",
+										"10": "Cast iron scrap"
+									},
+									{
+										"0": "121308",
+										"1": "10",
+										"2": "WPU10121308",
+										"3": "2017",
+										"4": "M10",
+										"5": "180.5",
+										"6": "nan",
+										"7": "U",
+										"8": "PPI Commodity data for Metals and metal products-Cast iron scrap, not seasonally adjusted",
+										"9": "Metals and metal products",
+										"10": "Cast iron scrap"
+									}
+								],
+								"schema": [
+									{
+										"key": "0",
+										"name": "item_code",
+										"type": "string"
+									},
+									{
+										"key": "1",
+										"name": "group_code",
+										"type": "string"
+									},
+									{
+										"key": "2",
+										"name": "series_id",
+										"type": "string"
+									},
+									{
+										"key": "3",
+										"name": "year",
+										"type": "int"
+									},
+									{
+										"key": "4",
+										"name": "period",
+										"type": "string"
+									},
+									{
+										"key": "5",
+										"name": "value",
+										"type": "float"
+									},
+									{
+										"key": "6",
+										"name": "footnote_codes",
+										"type": "string"
+									},
+									{
+										"key": "7",
+										"name": "seasonal",
+										"type": "string"
+									},
+									{
+										"key": "8",
+										"name": "series_title",
+										"type": "string"
+									},
+									{
+										"key": "9",
+										"name": "group_name",
+										"type": "string"
+									},
+									{
+										"key": "10",
+										"name": "item_name",
+										"type": "string"
+									}
+								]
+							},
+							"isSummary": false,
+							"language": "scala"
+						},
+						"persist_state": {
+							"view": {
+								"type": "details",
+								"chartOptions": {
+									"chartType": "bar",
+									"aggregationType": "sum",
+									"categoryFieldKeys": [
+										"0"
+									],
+									"seriesFieldKeys": [
+										"3"
+									],
+									"isStacked": false
+								}
+							}
+						}
+					}
+				}
+			},
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/49826b5d-2123-4d5a-93cc-eb331ee81c53/resourceGroups/synRG/providers/Microsoft.Synapse/workspaces/synrg2/bigDataPools/mmApacheSpark2",
+				"name": "mmApacheSpark2",
+				"type": "Spark",
+				"endpoint": "https://synrg2.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/mmApacheSpark2",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "2.4",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			}
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"tags": [
+						"parameters"
+					]
+				},
+				"source": [
+					"param_th = \"7E7\""
+				],
+				"attachments": null,
+				"execution_count": 16
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"from azureml.opendatasets import UsLaborPPICommodity\n",
+					"\n",
+					"data = UsLaborPPICommodity()\n",
+					"df = data.to_spark_dataframe()\n",
+					"# Display 10 rows\n",
+					"display(df.limit(2))"
+				],
+				"attachments": null,
+				"execution_count": 11
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"topItems_select = df.select(\"item_code\", \"year\",\"period\",\"value\")\r\n",
+					"topItems_select.createOrReplaceTempView(\"topItems_view\")\r\n",
+					"topItems_select.show(2)"
+				],
+				"attachments": null,
+				"execution_count": 12
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "sparksql"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%sql\r\n",
+					"\r\n",
+					"CREATE OR REPLACE TEMPORARY VIEW top_items as \r\n",
+					"select item_code, sum(value) as sumvalue from topItems_view group by item_code order by sum(value) desc"
+				],
+				"attachments": null,
+				"execution_count": 13
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"topitems_view = sqlContext.table(\"top_items\")\r\n",
+					"\r\n",
+					"topitems_view.show(10)"
+				],
+				"attachments": null,
+				"execution_count": 14
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"top5ItemsOverall = (topitems_view.select(\"item_code\",\"sumvalue\").filter(\"sumvalue > \" + param_th)).limit(5)\r\n",
+					"\r\n",
+					"top5ItemsOverall.show()"
+				],
+				"attachments": null,
+				"execution_count": 17
+			}
+		]
+	}
+}

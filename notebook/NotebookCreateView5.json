@@ -122,7 +122,7 @@
 				"source": [
 					"%%sql\r\n",
 					"\r\n",
-					"CREATE OR REPLACE TEMPORARY VIEW top_items as \r\n",
+					"CREATE OR REPLACE TEMPORARY VIEW top_items as 11111 \r\n",
 					"select item_code, sum(value) as sumvalue from topItems_view group by item_code order by sum(value) desc"
 				],
 				"execution_count": 13
